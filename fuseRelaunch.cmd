@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "/ad/eng/users/c/o/cole0995/My Documents/ISE/SingleCycleCPU/SingleCycleCPU/tb_cpu_isim_beh.exe" -prj "/ad/eng/users/c/o/cole0995/My Documents/ISE/SingleCycleCPU/SingleCycleCPU/tb_cpu_beh.prj" "work.tb_cpu" "work.glbl" 

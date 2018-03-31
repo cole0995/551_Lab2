@@ -1,0 +1,46 @@
+ISim log file
+Running: /ad/eng/users/c/o/cole0995/My Documents/ISE/SingleCycleCPU/SingleCycleCPU/tb_cpu_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /ad/eng/users/c/o/cole0995/My Documents/ISE/SingleCycleCPU/SingleCycleCPU/tb_cpu_isim_beh.wdb 
+ISim P.28xd (signature 0x54af6ca1)
+----------------------------------------------------------------------
+WARNING:Security:42 - Your license support version '2016.11' for ISIM expires in 29 days after which you will not qualify for Xilinx software updates or new releases.
+
+
+----------------------------------------------------------------------
+This is a Full version of ISim.
+Time resolution is 1 ps
+# onerror resume
+# wave add /
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+ISim P.28xd (signature 0x54af6ca1)
+----------------------------------------------------------------------
+WARNING:Security:42 - Your license support version '2016.11' for ISIM expires in 29 days after which you will not qualify for Xilinx software updates or new releases.
+
+
+----------------------------------------------------------------------
+This is a Full version of ISim.
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+ISim P.28xd (signature 0x54af6ca1)
+----------------------------------------------------------------------
+WARNING:Security:42 - Your license support version '2016.11' for ISIM expires in 29 days after which you will not qualify for Xilinx software updates or new releases.
+
+
+----------------------------------------------------------------------
+This is a Full version of ISim.
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+ISim P.28xd (signature 0x54af6ca1)
+----------------------------------------------------------------------
+WARNING:Security:42 - Your license support version '2016.11' for ISIM expires in 29 days after which you will not qualify for Xilinx software updates or new releases.
+
+
+----------------------------------------------------------------------
+This is a Full version of ISim.
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+# exit 0
