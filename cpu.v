@@ -29,7 +29,10 @@ module cpu(
 	 clk,
 	 initialize,
 	 instruction_initialize_data,
-	 instruction_initialize_address
+	 instruction_initialize_address,
+	 switches,
+	 display,
+	 AN
     );
 	 
 	 	 
@@ -38,12 +41,16 @@ module cpu(
 	 input initialize;
 	 input [31:0] instruction_initialize_data;
 	 input [31:0] instruction_initialize_address;
+	 input[7:0] switches;
+	 
+	 output [6:0] display;
+	 output [3:0] AN;
+	 
 	 wire [31:0] PC_out;
 	 wire [31:0] instruction;
 	 wire [31:0] instruction_mem_out;
 	 assign instruction = (initialize) ? 32'hFFFF_FFFF : instruction_mem_out;
     InstrMem InstructionMemory (instruction_mem_out , instruction_initialize_data  , (initialize) ? instruction_initialize_address : PC_out , initialize , clk);
-	
 	
 	
 	 wire [1:0] ALUOp;
@@ -67,6 +74,14 @@ module cpu(
 	 nbit_register_file Register_File(write_data, read_data_1, read_data_2, instruction[25:21] , instruction[20:16], write_register, RegWrite, clk);
     
 	 
+	//=========== Display and I/O Modules ==================
+	Se7en sevenDisplay (
+		clk,
+		rst,
+		read_data_1[15:0],
+		display,
+		AN);
+
 	 
 	 wire [31:0] immediate;
     sign_extend Sign_Extend( instruction[15:0], immediate);
