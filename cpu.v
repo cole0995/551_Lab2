@@ -27,30 +27,54 @@
 module cpu(
     rst,
 	 clk,
-	 initialize,
-	 instruction_initialize_data,
-	 instruction_initialize_address,
-	 switches,
-	 display,
-	 AN
+	 next_instruction,
+	 count,
+	 start,
+	 mem_write
     );
 	 
 	 	 
-    input rst;
-	 input clk;
-	 input initialize;
-	 input [31:0] instruction_initialize_data;
-	 input [31:0] instruction_initialize_address;
-	 input[7:0] switches;
+    input rst, clk, start, mem_write;
+	 input [31:0] next_instruction;
 	 
-	 output [6:0] display;
-	 output [3:0] AN;
-	 
-	 wire [31:0] PC_out;
+	 output reg [3:0] count = 4'b0;
 	 wire [31:0] instruction;
-	 wire [31:0] instruction_mem_out;
-	 assign instruction = (initialize) ? 32'hFFFF_FFFF : instruction_mem_out;
-    InstrMem InstructionMemory (instruction_mem_out , instruction_initialize_data  , (initialize) ? instruction_initialize_address : PC_out , initialize , clk);
+	 assign instruction = (cpu_started) ? mem_data_out : 32'b0;
+	 reg cpu_started = 1'b0;
+	
+	
+	always @(posedge mem_write) begin
+		count = count + 1;
+	end
+	
+	reg [3:0] mem_address;
+	
+	always @(posedge clk) begin
+		if (rst) begin
+			count = 4'b0;
+			cpu_started = 1'b0;
+		end
+		if (!cpu_started) begin
+			mem_address = count;
+		end 
+		else begin
+			if (PC_out !== 32'bX) begin
+				mem_address = PC_out;
+			end 
+			else begin	
+				mem_address = 1'b1;
+			end
+		end
+		if (start) begin
+			cpu_started = 1'b1;
+		end
+	end
+	
+	wire [31:0] mem_data_out;
+	
+	InstrMem imem(mem_data_out, next_instruction, mem_address, mem_write, clk);
+	 
+    //InstrMem InstructionMemory (instruction_mem_out , instruction_initialize_data  , (initialize) ? instruction_initialize_address : PC_out , initialize , clk);
 	
 	
 	 wire [1:0] ALUOp;
@@ -75,13 +99,6 @@ module cpu(
     
 	 
 	//=========== Display and I/O Modules ==================
-	Se7en sevenDisplay (
-		clk,
-		rst,
-		read_data_1[15:0],
-		display,
-		AN);
-
 	 
 	 wire [31:0] immediate;
     sign_extend Sign_Extend( instruction[15:0], immediate);
@@ -102,12 +119,11 @@ module cpu(
     mux #(32) ALU_Mem_Select_MUX (MemtoReg, ALUOut, MemOut, write_data);	 
 	 
 	 
-	 wire [31:0] PC_in;
+	 wire [31:0] PC_out, PC_in;
 	 PC Program_Counter(PC_out, PC_in, clk, rst);
 	 
 	 wire [31:0] PC_plus_4;
-	 Adder #(32) PC_Increment_Adder (PC_out, 32'd4, PC_plus_4);
-
+	 Adder #(32) PC_Increment_Adder (PC_out, 32'd1, PC_plus_4);  //changed to increment by 1, cause it somehow works this way
 
 	 wire [31:0] Branch_target_address;
 	 wire [31:0] immediate_x_4;

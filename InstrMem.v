@@ -16,7 +16,8 @@ module InstrMem(
 	
 	output [data_size-1:0] data_out;
 	input [data_size-1:0] data_in;
-	input [31:0] address;
+	//input [31:0] address;
+	input [3:0] address;
 	input write;
 	input clk; 
 	
@@ -24,12 +25,15 @@ module InstrMem(
 	reg [data_size-1:0] mem [0:memory_depth-1];
 	reg [data_size-1:0] data;
 
-	assign data_out = mem [address[1+address_size:2]];
+	//assign data_out = mem [address[1+address_size:2]];
+	assign data_out = mem[address];
+
 
 	always @(posedge clk) begin
 
 		case (write)
-			1:  mem [address[1+address_size:2]] <= data_in;
+			//1:  mem [address[1+address_size:2]] <= data_in;
+			1: mem [address] <= data_in;
 		endcase
 
 	end 

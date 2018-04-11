@@ -22,6 +22,7 @@ module TOP_ku(
 		clk,
 		keyboard_clk,
 	   rst,
+		start,
 		keyboard_data,
 		//uart_in,
 		uart_out,
@@ -35,7 +36,7 @@ module TOP_ku(
 		
 		
 		// I/O ==========================================================================
-		input clk, keyboard_clk, rst, keyboard_data;
+		input clk, keyboard_clk, rst, start, keyboard_data;
 		output uart_out;
 		output reg keyboard_done, TxD_busy;	
 		output wire [7:0] display;
@@ -56,6 +57,7 @@ module TOP_ku(
 		keyboardtest keyboard(keyboard_clk, keyboard_data, kbd, keydata); // get key click
 		
 		key2ascii k2a(asciidata, keydata);	// convert to ascii
+		
 		
 		// Clock functions
 		always @(posedge clk) begin
@@ -78,5 +80,39 @@ module TOP_ku(
 		
 		Se7en seven(clk, rst, combined, display, AN);
 		// // ===========================================================================
+
+		// Shift Register ===============================================================
+		//output of key2ascii is the input, right?
+		wire [7:0] data_out;
+		wire ready;
+	   shiftRegister(asciidata, ready, data_out);
+		
+		//need module to read through the shift register
+		// // ===========================================================================
+
+
+		// CPU ==========================================================================
+		//need to define next_instruction, mem_write, and possibly count
+		//also need to add an enable for it
+		cpu CPU(rst,clk,next_instruction,count,start,mem_write);
+		// // ===========================================================================
+		
+		
+		// Fibonacci ====================================================================
+		wire fib_en;
+		//assign fib_en = (shiftReg[0] == 'B')? 1:0;
+		wire [31:0] fib_out;
+		//need to define fib_in and fib_en;
+		wire [6:0] fib_in;
+		Fibonacci fib(fib_in, fib_en, fib_out);
+		// // ===========================================================================
+
+
+		// Terminal Output ==============================================================
+		//http://www.fpga4fun.com/SerialInterface.html 
+		//^ guide on sending Tx data to terminal
+		//An output line must be terminated with carriage return + linefeed. (0x13 + 0x10)
+		// // ===========================================================================
+
 
 endmodule

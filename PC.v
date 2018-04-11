@@ -16,12 +16,10 @@ input [size-1:0] in;
 output reg [size-1:0] out;
 
 always @(posedge clk) begin
-
-if (reset) 
-out <= 0;
-else
-out <= in;
-
-end
-
+	if (reset) 
+		out <= 0;
+	else
+		out <= in;
+	end
+	
 endmodule
