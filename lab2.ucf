@@ -1,0 +1,27 @@
+NET "clk" LOC = V10 | IOSTANDARD=LVCMOS33;
+NET "rst" LOC = B8;
+
+NET "keyboard_clk" LOC = L12;
+NET "keyboard_data" LOC = J13;
+
+NET "keyboard_clk" PULLUP;
+NET "keyboard_data" PULLUP;
+
+NET "uart_out" LOC = N18;
+
+NET "keyboard_done" LOC = U16;
+NET "TxD_busy" LOC = V16;
+
+Net "display[0]" LOC = T17;
+Net "display[1]" LOC = T18;
+Net "display[2]" LOC = U17; 
+Net "display[3]" LOC = U18; 
+Net "display[4]" LOC = M14;
+Net "display[5]" LOC = N14;
+Net "display[6]" LOC = L14;
+Net "display[7]" LOC = M13;
+
+Net "AN[0]" LOC = N16; 
+Net "AN[1]" LOC = N15;
+Net "AN[2]" LOC = P18;
+Net "AN[3]" LOC = P17; 
